@@ -1,0 +1,10 @@
+Package: gallimaufr
+Type: Package
+Title: Miscellaneous Functions
+Version: 0.1.0
+Author: Liam Wright
+Maintainer: Liam Wright <liam.wright.17@ucl.ac.uk>
+Description: A medley of functions for various tasks.
+License: CC-BY 4.0
+Encoding: UTF-8
+LazyData: true

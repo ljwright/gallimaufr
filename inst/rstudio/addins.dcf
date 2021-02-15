@@ -1,0 +1,4 @@
+Name: Insert Tilde
+Description: Inserts `~` at the cursor position.
+Binding: insertTilde
+Interactive: false
