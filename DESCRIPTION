@@ -8,3 +8,8 @@ Description: A medley of functions for various tasks.
 License: CC-BY 4.0
 Encoding: UTF-8
 LazyData: true
+Imports:
+  rstudioapi,
+  tidyverse,
+  mice,
+  glue
