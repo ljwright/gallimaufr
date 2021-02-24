@@ -12,4 +12,6 @@ Imports:
   rstudioapi,
   tidyverse,
   mice,
-  glue
+  glue,
+  officer,
+  flextable
