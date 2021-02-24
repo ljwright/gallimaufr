@@ -1,4 +1,4 @@
-make_tbl <- function(data, header_lbls){
+make_flx <- function(data, header_lbls){
   flextable(data) %>%
     set_header_labels(values = header_lbls) %>%
     border_remove() %>%
