@@ -5,11 +5,14 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
   } else{
     data <- rename(data, wt = all_of(!!weight_var))
   }
+  data$wt <- wt*nrow(data)/sum(wt)
+
   if (is.null(group_var)){
     data$group_var <- "1"
   } else{
     data <- rename(data, group_var = all_of(!!group_var))
   }
+
   if (is.null(imp_var)){
     data$imp <- 1
   } else{
@@ -30,6 +33,7 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
   desc_cat <- data %>%
     select(id, wt, group_var, where(is.factor)) %>%
     pivot_longer(-c(id, wt, group_var), names_to = "var", values_to = "cat") %>%
+    drop_na() %>%
     count(group_var, var, cat, wt = wt) %>%
     mutate(n = n/n_imps) %>%
     filter(!is.na(cat)) %>%
