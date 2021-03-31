@@ -5,7 +5,8 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
   } else{
     data <- rename(data, wt = all_of(!!weight_var))
   }
-  data$wt <- wt*nrow(data)/sum(wt)
+  data <- data %>%
+    mutate(wt = wt*n()/sum(wt, na.rm = TRUE))
 
   if (is.null(group_var)){
     data$group_var <- "1"
@@ -16,7 +17,7 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
   if (is.null(imp_var)){
     data$imp <- 1
   } else{
-    data <- rename(data, imp_var = all_of(!!imp_var))
+    data <- rename(data, imp = all_of(!!imp_var))
   }
   data <- rename(data, id = all_of(!!id_var))
 
@@ -46,9 +47,9 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
     select(group_var, var, cat, string)
 
   desc_missing <- data %>%
-    group_by(group_var) %>%
     mutate(across(-group_var,  ~ ifelse(is.na(.x), 1, 0))) %>%
-    summarise(across(-group_var, mean)) %>%
+    group_by(group_var) %>%
+    summarise(across(everything(), mean), .groups = "drop") %>%
     pivot_longer(-group_var, names_to = "var", values_to = "miss") %>%
     mutate(miss = glue("{round(miss*100, 2)}%"))
 
