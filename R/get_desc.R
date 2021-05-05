@@ -38,7 +38,7 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
     count(group_var, var, cat, wt = wt) %>%
     mutate(n = n/n_imps) %>%
     filter(!is.na(cat)) %>%
-    group_by(var) %>%
+    group_by(group_var, var) %>%
     mutate(prop = n*100/sum(n),
            across(c(n, prop), round, 2),
            n = format(n, big.mark = ",") %>%
