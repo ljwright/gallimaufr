@@ -1,5 +1,6 @@
-get_desc <- function(data, id_var = "id", imp_var = NULL,
+get_desc <- function(data, id_var = NULL, imp_var = NULL,
                      weight_var = NULL, group_var = NULL){
+
   if (is.null(weight_var)){
     data$wt <- 1
   } else{
@@ -19,7 +20,12 @@ get_desc <- function(data, id_var = "id", imp_var = NULL,
   } else{
     data <- rename(data, imp = all_of(!!imp_var))
   }
-  data <- rename(data, id = all_of(!!id_var))
+
+  if (is.null(id_var)){
+    data <- mutate(data, id = row_number())
+  } else{
+    data <- rename(data, id = all_of(!!id_var))
+  }
 
   n_imps <- unique(data$imp) %>% length()
 
