@@ -1,6 +1,7 @@
-make_flx <- function(data, header_lbls){
+make_flx <- function(data, header_lbls = NULL, span_lbls = NULL){
   flextable(data) %>%
     set_header_labels(values = header_lbls) %>%
+    {if (!is.null(span_lbls)) add_header(., values = span_lbls) else .} %>%
     border_remove() %>%
     merge_v(1) %>%
     merge_h(part = "header") %>%
